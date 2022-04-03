@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:tracing="http://www.mulesoft.org/schema/mule/tracing" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/tracing http://www.mulesoft.org/schema/mule/tracing/current/mule-tracing.xsd">
+  <flow name="payment-approval-by-pnr" doc:id="2e05bf28-900f-40e5-951a-886d539800ff" >
+		<ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  flight: "ANY6584",
+  lastName: "Smith",
+  gate: "4A",
+  PNR: "928382J",
+  flightDate: "2019-02-14",
+  boarding: "13:15:00",
+  seat: "16C",
+  depart: "14:30:00",
+  class: "Economy",
+  airportArrive: "SFO",
+  airportDepart: "ATL",
+  bagsCount: 2
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+	</flow>
+	<flow name="check-in-by-pnr" doc:id="836dfa42-76fb-4e75-a7d4-45aa2f3a0ff4" >
+		<tracing:set-logging-variable doc:name="Set logging variable" doc:id="ba908632-655b-497e-a5da-0c6e8ad55932" variableName="PNR" value="#[vars.PNR default '']"/>
+		<ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  paymentID: "PAY-1AKD7482FAB9STATKO"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+	</flow>
+	<flow name="api-main">
+        <http:listener config-ref="apiHttpListenerConfig" path="/api/${api.majorVersion}/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="apiConfig" />
+        <error-handler ref="api-error-handler"></error-handler>
+        </flow>
+    <flow name="api-console">
+        <http:listener config-ref="apiHttpListenerConfig" path="/console/${api.majorVersion}/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="apiConfig" />
+        <error-handler ref="api-console-error-handler"></error-handler>
+    </flow>
+    <flow name="put:\tickets\(PNR)\checkin:application\json:apiConfig">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="PNR">attributes.uriParams.'PNR'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="2de615c0-dc0e-49f7-a0c8-f279b499f528" name="check-in-by-pnr" />
+    </flow>
+    <flow name="put:\tickets\(PNR)\paymentApproval:application\json:apiConfig">
+        <ee:transform>
+            <ee:variables>
+                <ee:set-variable variableName="PNR">attributes.uriParams.'PNR'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="ff5164fc-0e01-446c-bbcc-eb61dfc413a9" name="payment-approval-by-pnr" />
+    </flow>
+</mule>

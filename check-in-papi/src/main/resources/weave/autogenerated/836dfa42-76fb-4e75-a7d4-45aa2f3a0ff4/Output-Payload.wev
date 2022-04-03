@@ -1,0 +1,21 @@
+%dw 2.0
+
+type auto_836dfa42_76fb_4e75_a7d4_45aa2f3a0ff4_Output_Payload = {
+  paymentID: String, 
+  _?: Any
+} {"description": "Represents an instance of a Payment made."} | {
+  seat: String, 
+  lastName: String, 
+  flight: String, 
+  airportDepart: String, 
+  flightDate: String, 
+  airportArrive: String, 
+  PNR: String, 
+  gate: String, 
+  depart: String, 
+  bagsCount: Number, 
+  class: "Economy" | "Premium" | "First" | "Business", 
+  boarding: String, 
+  _?: Any
+} {"description": "Represents a Boarding Pass for a Passenger linked via PNR(Passenger Name Record)."}
+
