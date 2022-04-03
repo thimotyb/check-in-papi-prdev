@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>6d7cebd3-4dc2-4ace-9334-46b23e3b031d</groupId>
 		<artifactId>solutions-parent-pom</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../parent-pom.xml</relativePath>
 	</parent>
 	<groupId>6d7cebd3-4dc2-4ace-9334-46b23e3b031d</groupId>
 	<artifactId>apps-common</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>mule-application</packaging>
 
 	<name>apps-common</name>

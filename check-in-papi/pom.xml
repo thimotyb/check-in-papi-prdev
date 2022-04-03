@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>6d7cebd3-4dc2-4ace-9334-46b23e3b031d</groupId>
 		<artifactId>solutions-parent-pom</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../parent-pom.xml</relativePath>
 	</parent>
 	<groupId>com.mulesoft.training.anyairline</groupId>
@@ -26,6 +26,7 @@
 			<plugin>
 				<groupId>org.mule.tools.maven</groupId>
 				<artifactId>mule-maven-plugin</artifactId>
+				<version>3.5.2</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -54,10 +55,15 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-				<groupId>org.mule.modules</groupId>
-				<artifactId>mule-tracing-module</artifactId>
-				<classifier>mule-plugin</classifier>
-			</dependency>
+			<groupId>org.mule.modules</groupId>
+			<artifactId>mule-tracing-module</artifactId>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>${student.deployment.ap.orgid}</groupId>
+			<artifactId>apps-common</artifactId>
+			<classifier>mule-plugin</classifier>
+		</dependency>
 	</dependencies>
 
 	<repositories>

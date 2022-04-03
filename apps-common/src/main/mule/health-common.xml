@@ -30,7 +30,6 @@
     <flow-ref name="check-all-dependencies-are-alive" doc:name="check-all-dependencies-are-alive"/>
     <set-payload value="UP" doc:name="UP"/>
   </flow>
-  <sub-flow name="check-all-dependencies-are-alive">
-    <logger/>
-  </sub-flow>
+
+
 </mule>

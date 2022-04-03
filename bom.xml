@@ -16,7 +16,7 @@
   <!-- Exchange NON-SNAPSHOT version for deployment -->
   <!-- to-use-in-pom-xml-start <version>1.0.0-SNAPSHOT</version> to-use-in-pom-xml-end -->
   <!-- to-not-use-in-pom-xml-start -->
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <!-- to-not-use-in-pom-xml-end -->
   <packaging>pom</packaging>
   <!-- IMPORTANT: Due to a limitation in MUnit, this file must be installed into the local Maven repo after every change: -->
@@ -105,7 +105,7 @@
     <!-- library-style Mule plugins -->
     <!-- to-use-in-pom-xml-start <apps-commons.version>1.0.0-SNAPSHOT</apps-commons.version> to-use-in-pom-xml-end -->
     <!-- to-not-use-in-pom-xml-start -->
-    <apps-commons.version>1.0.3</apps-commons.version>
+    <apps-commons.version>1.0.0</apps-commons.version>
     <!-- to-not-use-in-pom-xml-end -->
     <!-- Mule extensions/modules/connectors -->
     <!-- to-use-in-pom-xml-start 
@@ -137,6 +137,7 @@
     <paypal-sapi.groupId>${aa.ap.orgid}</paypal-sapi.groupId>
     <paypal-sapi.artifactId>paypal-sapi</paypal-sapi.artifactId>
     <paypal-sapi.version>1.2.1</paypal-sapi.version>
+    <student.deployment.ap.orgid>6d7cebd3-4dc2-4ace-9334-46b23e3b031d</student.deployment.ap.orgid>
   </properties>
   <build>
     <pluginManagement>
@@ -494,7 +495,7 @@
       <dependency>
         <!-- students: replace with your AP org ID -->
         <groupId>${student.deployment.ap.orgid}</groupId>
-        <artifactId>apps-commons</artifactId>
+        <artifactId>apps-common</artifactId>
         <version>${apps-commons.version}</version>
         <classifier>mule-plugin</classifier>
       </dependency>

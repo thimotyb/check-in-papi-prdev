@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>6d7cebd3-4dc2-4ace-9334-46b23e3b031d</groupId>
 		<artifactId>solutions-bom</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>./bom.xml</relativePath>
 	</parent>
 
 	<groupId>6d7cebd3-4dc2-4ace-9334-46b23e3b031d</groupId>
 	<artifactId>solutions-parent-pom</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>solutions-parent-pom</name>
 
